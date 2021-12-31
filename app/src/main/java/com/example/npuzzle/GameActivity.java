@@ -3,11 +3,13 @@ package com.example.npuzzle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.GridView;
+import android.widget.LinearLayout;
 
 public class GameActivity extends AppCompatActivity {
 
-    GridView boardView;
+    LinearLayout boardLayout;
+    BoardView boardView;
+    Board board;
     int boardSize;
 
     @Override
@@ -15,8 +17,15 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        boardView = findViewById(R.id.boardView);
+        boardLayout = findViewById(R.id.boardLayout);
 
         boardSize = getIntent().getIntExtra("boardSize", 3);
+
+        board = new Board(this, boardSize);
+
+        boardView = new BoardView(this, board, boardSize);
+
+        boardLayout.addView(boardView);
+
     }
 }
