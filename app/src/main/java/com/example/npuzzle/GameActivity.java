@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 public class GameActivity extends AppCompatActivity {
-
     LinearLayout boardLayout;
     BoardView boardView;
     Board board;
@@ -23,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
         board = new Board(this, boardSize);
 
-        boardView = new BoardView(this, board, boardSize);
+        boardView = new BoardView(this, board, boardSize, this);
 
         boardLayout.addView(boardView);
 
