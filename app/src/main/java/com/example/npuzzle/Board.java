@@ -27,9 +27,7 @@ public class Board {
             Collections.shuffle(nums);
         }
         nums.add(0);
-        System.out.println(nums);
         this.board = toArray(nums, this.size);
-        System.out.println(this);
     }
 
     public Cell[][] getBoard() {
@@ -71,13 +69,13 @@ public class Board {
         List<Integer> nums = new ArrayList<>();
         for (Cell[] row : this.board) {
             for (Cell cell : row) {
-                if (cell.getNum() != 0) {
-                    nums.add(cell.getNum());
-                }
+                nums.add(cell.getNum());
             }
         }
         List<Integer> copyNums = new ArrayList<>(nums);
         Collections.sort(copyNums);
+        copyNums.remove(0);
+        copyNums.add(0);
         return nums.equals(copyNums);
     }
 
