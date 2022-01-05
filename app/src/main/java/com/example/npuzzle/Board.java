@@ -1,10 +1,12 @@
 package com.example.npuzzle;
 
 import android.content.Context;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
     private Cell[][] board;
@@ -23,28 +25,26 @@ public class Board {
         for (int i = 1; i < this.size * this.size; i++) {
             nums.add(i);
         }
-        while (getNumInversions(nums) == 0 || getNumInversions(nums) % 2 != 0) {
-            Collections.shuffle(nums);
-        }
         nums.add(0);
         this.board = toArray(nums, this.size);
+        generateBoardRandom();
     }
 
     public Cell[][] getBoard() {
         return this.board;
     }
 
-    public int getNumInversions(List<Integer> nums) {
-        int numInversions = 0;
-        for (int i = 0; i < nums.size() - 1; i++) {
-            int a = nums.get(i);
-            int b = nums.get(i + 1);
-            if (a > b) {
-                numInversions++;
-            }
-        }
-        return numInversions;
-    }
+//    public int getNumInversions(List<Integer> nums) {
+//        int numInversions = 0;
+//        for (int i = 0; i < nums.size() - 1; i++) {
+//            int a = nums.get(i);
+//            int b = nums.get(i + 1);
+//            if (a > b) {
+//                numInversions++;
+//            }
+//        }
+//        return numInversions;
+//    }
 
     public Cell[][] toArray(List<Integer> list, int rows) {
         int resultRows = list.size()/rows;
@@ -80,7 +80,7 @@ public class Board {
     }
 
     public void move(Cell tile) {
-        if (canMove(tile) && !isBoardSolved()) {
+        if (canMove(tile)) {
             Cell nullCell = getCellWithNum(0);
             nullCell.setNum(tile.getNum());
             tile.setNum(0);
@@ -114,6 +114,29 @@ public class Board {
             }
             s.append('\n');
         }
-        return s.toString();
+        return '\n' + s.toString() + '\n';
+    }
+
+    public List<Cell> getMovableCells() {
+        List<Cell> movableCells = new ArrayList<>();
+        for (Cell[] row : this.board) {
+            for (Cell cell : row) {
+                if (canMove(cell)) {
+                    movableCells.add(cell);
+                }
+            }
+        }
+        return movableCells;
+    }
+
+    public void generateBoardRandom() {
+        List<Cell> movableCells;
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            movableCells = getMovableCells();
+            System.out.println(this + " " + movableCells);
+            Cell chosenCell = movableCells.get(random.nextInt(movableCells.size()));
+            move(chosenCell);
+        }
     }
 }
