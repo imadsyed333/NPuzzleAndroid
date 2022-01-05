@@ -14,6 +14,8 @@ public class Cell extends androidx.appcompat.widget.AppCompatButton {
         setNum(num);
         this.row = row;
         this.col = col;
+        setMinHeight(getWidth());
+        setTextSize(10);
     }
 
     public int getRow() {
@@ -33,6 +35,9 @@ public class Cell extends androidx.appcompat.widget.AppCompatButton {
             return " ";
         }
         return Integer.toString(this.num);
+    }
+
+    public void setImage() {
     }
 
     @SuppressLint("SetTextI18n")
